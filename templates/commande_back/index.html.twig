@@ -1,0 +1,104 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Commande index{% endblock %}
+
+{% block stylesheets %} 
+    {{ parent() }}
+    <style>
+
+
+    /* Style pour le lien pdf */
+a[href="{{ path('pdf_app_commande') }}"] {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+
+  </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Interface Commande </h1>
+
+    <input type="text" id="search-input" onkeyup="search()" placeholder="Rechercher...">
+    
+
+    <table class="table" id="commande-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+               
+                <th>Nombre du commande</th>
+                <th>Nom du produit</th>
+                <th>Localisation</th>
+                <th>Date du Commande</th>
+                
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+              
+                <td>{{ commande.nombreP }}</td>
+                <td>{{ commande.produit }}</td>
+                <td>{{ commande.localisation }}</td>
+                <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
+                
+                <td>
+                    <a href="{{ path('app_commande_show', {'id': commande.id}) }}">Afficher</a>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<a href="{{ path('pdf_app_commande') }}">telecharger PDF</a>
+ <a href="{{ path('statique_app_name') }}">Statistique</a>
+   
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script>
+      function search() {
+    // Récupère la valeur du champ de recherche
+    var input = document.getElementById("search-input");
+    var filter = input.value.toUpperCase();
+    // Récupère les lignes de la table
+    var table = document.getElementById("commande-table");
+    var rows = table.getElementsByTagName("tr");
+    // Parcourt chaque ligne de la table
+    for (var i = 0; i < rows.length; i++) {
+        var td1 = rows[i].getElementsByTagName("td")[1];
+        var td2 = rows[i].getElementsByTagName("td")[2];
+        if (td1 || td2) {
+            var txtValue1 = td1.textContent || td1.innerText;
+            var txtValue2 = td2.textContent || td2.innerText;
+            // Si la valeur d'une des colonnes est égale à la recherche, affiche la ligne, sinon la cache
+            if (txtValue1.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+}
+
+
+    </script>
+{% endblock %}
+
+

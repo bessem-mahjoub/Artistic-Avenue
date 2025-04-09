@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participants{% endblock %}
+
+{% block body %}
+    <h1>Participants</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ participant.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ participant.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ participant.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Num</th>
+                <td>{{ participant.num }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_participants_back_index') }}">back to list</a>
+
+    <a href="{{ path('app_participants_back_edit', {'id': participant.id}) }}">edit</a>
+
+    {{ include('participants_back/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Edit Publicite{% endblock %}
+
+{% block body %}
+    <h1>Edit Publicite</h1>
+
+    {{ include('publicite/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_publicite_index') }}">back to list</a>
+
+    {{ include('publicite/_delete_form.html.twig') }}
+{% endblock %}

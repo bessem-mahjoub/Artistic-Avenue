@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PointRelais index{% endblock %}
+
+{% block body %}
+    <h1>PointRelais index</h1>
+ 
+ {% include 'map.html.twig' %}
+
+    <button style="background-color: #8B00FF; color: white; padding: 10px 20px; border: none; border-radius: 4px;">
+  <a href="{{ path('app_point_relais_new') }}" style="text-decoration: none; color: white;">Create new</a>
+</button>
+
+{% endblock %}

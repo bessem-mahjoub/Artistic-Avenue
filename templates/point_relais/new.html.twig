@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PointRelais{% endblock %}
+
+{% block body %}
+    <h1>Create new PointRelais</h1>
+
+    {{ form_start(form, {attr:{novalidate:'novalidate'} })  }}
+
+    {{ include('point_relais/_form.html.twig') }}
+
+    <a href="{{ path('app_point_relais_index') }}">back</a>
+
+
+    
+{% endblock %}

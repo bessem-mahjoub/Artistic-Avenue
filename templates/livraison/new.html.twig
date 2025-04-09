@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}    
+
+    <div style="display:flex; flex-direction:row;">
+        <div style="width:35%;">
+            {{ include('livraison/_form.html.twig') }} 
+            {{ form_start(form, {'attr':{'novalidate':'novalidate'} })  }}
+            <a href="{{ path('app_livraison_index') }}">back to list</a>
+        </div>
+        
+        <div style="width:65%;">
+            {% include 'map.html.twig' %}
+        </div>
+    </div>
+
+{% endblock %}

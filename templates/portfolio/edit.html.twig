@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Portfolio{% endblock %}
+
+{% block stylesheets %}
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     <style>
+        h1 {
+            color: #444;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 36px;
+            margin-bottom: 30px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .form-control {
+            border-color: #ccc;
+            border-radius: 0;
+            box-shadow: none;
+            font-size: 16px;
+            height: 40px;
+            padding: 10px;
+        }
+        .form-control:focus {
+            border-color: #8bc34a;
+            box-shadow: none;
+        }
+        .btn-primary {
+            background-color: #8bc34a;
+            border-color: #8bc34a;
+            color: #fff;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: background-color .3s ease;
+        }
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background-color: #689f38;
+            border-color: #689f38;
+            color: #fff;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .portfolio-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Edit Portfolio</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    {% if form.image.vars.value %}
+        <img src="{{ vich_uploader_asset(form.image) }}" alt="portfolio image" />
+    {% endif %}
+
+    <button class="btn btn-primary">Edit</button>
+    {{ form_end(form) }}
+{% endblock %}

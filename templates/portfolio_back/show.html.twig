@@ -1,0 +1,48 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Portfolio{% endblock %}
+
+{% block body %}
+    <h1>Portfolio</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ portfolio.id }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td> <img src="{{ portfolio.getImage() }}" alt="{{ portfolio.getTitre() }}" style="max-width: 10%; border-radius: 20px;"></td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ portfolio.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ portfolio.description }}</td>
+            </tr>
+            <tr>
+                <th>Likes</th>
+                <td>{{ portfolio.likes }}</td>
+            </tr>
+            <tr>
+                <th>Instagram</th>
+                <td>{{ portfolio.instagram }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-5ujl0gox1x5KPJpFZYpRjCTVf4h4H59XbgCzZ1YDZnySjlSAXQOmAp1MkRLSnEoIwuKLtRny7VpzhWzsB8dLLA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <a href="{{ path('app_portfolio_back_delete', {'id': portfolio.id}) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this portfolio?')">
+    <i class="fas fa-trash-alt"></i> Delete
+</a>
+  
+    <a href="{{ path('app_portfolio_back_index') }}"class="btn btn-info ">back to list</a>
+    </div>
+
+
+  
+{% endblock %}

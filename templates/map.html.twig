@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaflet Map Example</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+</head>
+<body>
+  <div id="mapid" style="height: 500px;"></div>
+
+
+  <p id="message"></p>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script>
+    var mymap = L.map('mapid');
+
+    var marker;
+    var markerLocation;
+
+
+
+
+    // Try to get the user's current location
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        // Set the map view to the user's current location
+        mymap.setView([position.coords.latitude, position.coords.longitude], 9);
+
+
+
+        // Update the marker's position when it's dragged
+        marker.on('dragend', function(event) {
+          markerLocation = event.target.getLatLng();
+          console.log(markerLocation);
+        });
+      }, function(error) {
+        // If there's an error getting the user's location, fall back to a default location
+        console.warn(`Error(${error.code}): ${error.message}`);
+        mymap.setView([51.505, -0.09], 13);
+      });
+    } else {
+      // If geolocation is not supported, fall back to a default location
+      mymap.setView([51.505, -0.09], 13);
+    }
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(mymap);
+
+
+
+
+// Create a custom icon for the point relais marker
+var customIcon = L.icon({
+  iconUrl: 'pipoject\public\assets\images/point_relais_icon.png', // Replace with the path to your point relais logo
+  iconSize: [32, 32], // Adjust the size of the icon if needed
+  iconAnchor: [16, 32], // Adjust the anchor point of the icon if needed
+});
+
+
+
+    // Create a fixed point marker on the map
+    var fixedMarker = L.marker([36.752089156946326, 10.159592809770281]).addTo(mymap); 
+    fixedMarker.bindPopup('Tunis');
+
+    var fixedMarker = L.marker([37.26968150969715, 9.752837378411233]).addTo(mymap); 
+    fixedMarker.bindPopup('Bizerte');
+
+    var fixedMarker = L.marker([36.94989178681327, 10.112941278336894]).addTo(mymap); 
+    fixedMarker.bindPopup('Ariana ');
+
+    var fixedMarker = L.marker([36.73448194195683, 10.712010659116023]).addTo(mymap); 
+    fixedMarker.bindPopup('Nabeul');
+    
+    var fixedMarker = L.marker([36.516258626036624, 10.272275057646768]).addTo(mymap); 
+    fixedMarker.bindPopup('Ben arous');
+
+    var fixedMarker = L.marker([36.76309161490538, 9.305594549652678]).addTo(mymap); 
+    fixedMarker.bindPopup('Beja');
+
+    var fixedMarker = L.marker([36.74988847598359, 9.775148797189539]).addTo(mymap); 
+    fixedMarker.bindPopup('Manouba');
+
+
+
+
+
+
+
+
+
+var saveBtn = document.getElementById('save-btn');
+saveBtn.addEventListener('click', function() {
+  if (markerLocation) {
+    console.log(markerLocation);
+    // Store the latitude and longitude values in variables
+    var latitude = markerLocation.lat();
+    var longitude = markerLocation.lng();
+    // Assign the values to pointrelais.latitude and pointrelais.longitude
+    PointRelais.latitude = latitude;
+    PointRelais.longitude = longitude;
+    // Do something with the marker location here, like save it to a database
+    var message = document.getElementById('message');
+    message.textContent = 'Location saved: ' + markerLocation.toString();
+  } else {
+    console.log('No marker location set');
+  }
+});
+
+
+
+  </script>
+</body>
+</html>

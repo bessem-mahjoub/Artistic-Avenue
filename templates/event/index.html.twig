@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Event index{% endblock %}
+
+{% block body %}
+    <h1>Event index</h1>
+    <style>.custom-color {
+        color: black;
+    }
+    </style>
+    
+    <form method="get" action="{{ path('app_event_index') }}">
+    <div class="form-group">
+        <label for="type">Type:</label>
+        <select class="form-control" id="type" name="type">
+            <option value="">Tous</option>
+            <option value="cinema" {% if app.request.query.get('type') == 'cinema' %}selected{% endif %}>Cinéma</option>
+            <option value="concert" {% if app.request.query.get('type') == 'concert' %}selected{% endif %}>Concert</option>
+            <option value="theatre" {% if app.request.query.get('type') == 'theatre' %}selected{% endif %}>Théâtre</option>
+            <option value="master_classe" {% if app.request.query.get('type') == 'master_classe' %}selected{% endif %}>Master Classe</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Filtrer</button>
+</form>
+
+
+    <div class="row">
+        {% for event in events %}
+       {% if (not app.request.query.get('type') or event.type == app.request.query.get('type')) and (not app.request.query.get('dateDebut') or event.datedebut >= app.request.query.get('dateDebut')) and (not app.request.query.get('dateFin') or event.datefin <= app.request.query.get('dateFin')) %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ event.getAffiche }}" alt="{{ event.nomOrg }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title custom-color">{{ event.nomOrg }}</h5>
+                        <p class="card-text custom-color">Date début: {{ event.datedebut ? event.datedebut.format('Y-m-d') : '' }}</p>
+                        <p class="card-text custom-color">Date fin: {{ event.datefin ? event.datefin.format('Y-m-d') : '' }}</p>
+                        <p class="card-text custom-color">Adresse: {{ event.adresse }}</p>
+                        <p class="card-text custom-color">Nombre de places: {{ event.nbrPlace }}</p>
+                        <p class="card-text custom-color">Type: {{ event.type }}</p>
+                        <a href="{{ path('app_event_show', {'id': event.id}) }}" class="btn btn-primary">Show</a>
+                        <a href="{{ path('app_event_edit', {'id': event.id}) }}" class="btn btn-secondary">Edit</a>
+                        <a href="{{ path('app_participants_new', {'id': event.id}) }}" class="btn btn-success">Participate</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="mt-3">
+        <a href="{{ path('app_event_new') }}" class="btn btn-primary">Create new</a>
+        <a href="{{ path('app_event_pdf') }}" class="btn btn-secondary">Generer PDF</a>
+    </div>
+
+    <ul class="pagination">
+    {% for page in 1..totalPages %}
+        <li class="page-item {% if page == currentPage %}active{% endif %}">
+            <a class="page-link" href="{{ path('app_event_index', {'currentPage': page, 'type': app.request.query.get('type')}) }}">{{ page }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

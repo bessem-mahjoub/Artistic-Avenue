@@ -1,0 +1,47 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Publicite index{% endblock %}
+
+{% block body %}
+    <h1>Publicite index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Link</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                <th>IsPublished</th>
+                <th>UpddatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for publicite in publicites %}
+            <tr>
+                <td>{{ publicite.id }}</td>
+                <td>{{ publicite.name }}</td>
+                <td>{{ publicite.image }}</td>
+                <td>{{ publicite.link }}</td>
+                <td>{{ publicite.startDate ? publicite.startDate|date('Y-m-d') : '' }}</td>
+                <td>{{ publicite.endDate ? publicite.endDate|date('Y-m-d') : '' }}</td>
+                <td>{{ publicite.isPublished ? 'Yes' : 'No' }}</td>
+                <td>{{ publicite.upddatedAt ? publicite.upddatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_publicite_show', {'id': publicite.id}) }}">show</a>
+                    <a href="{{ path('app_publicite_edit', {'id': publicite.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_publicite_new') }}">Create new</a>
+{% endblock %}

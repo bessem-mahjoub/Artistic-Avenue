@@ -1,0 +1,70 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Event index{% endblock %}
+
+{% block body %}
+    <h1>Event index</h1>
+    <!-- Ajouter un élément audio avec une source MP3 -->
+    <audio id="myAudio" src="{{ asset('choufli.mp3') }}"></audio>
+    
+
+    <!-- Ajouter un bouton pour lancer la lecture de la musique -->
+    <button onclick="playAudio()">Play Music</button>
+<button onclick="stopAudio()">Stop Music</button>
+<div class="col-md-8">
+    <video width="100%" controls>
+        <source src="{{ asset('ruby.mp4') }}" type="video/mp4">
+    </video>
+</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomOrg</th>
+                <th>Date debut</th>
+                <th>Date fin</th>
+                <th>Affiche</th>
+                <th>Adresse</th>
+                <th>NbrPlace</th>
+                <th>type</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.id }}</td>
+                <td>{{ event.nomOrg }}</td>
+                <td>{{ event.datedebut ? event.datedebut|date('Y-m-d') : '' }}</td>
+                <td>{{ event.datefin ? event.datefin|date('Y-m-d') : '' }}</td>
+                <td><img src="{{ event.getAffiche }}”> height="50"</td>
+                <td>{{ event.adresse }}</td>
+                <td>{{ event.nbrPlace }}</td>
+                <td>{{ event.type }}</td>
+                <td>
+                    <a href="{{ path('app_event_back_show', {'id': event.id}) }}">show</a>
+                    <a href="{{ path('app_event_back_edit', {'id': event.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+
+    <a href="{{ path('app_event_back_new') }}">Create new</a>
+    <script>
+        function playAudio() {
+            var audio = document.getElementById("myAudio");
+            audio.play();
+        }
+        function stopAudio() {
+  var audio = document.getElementById("myAudio");
+  audio.pause();
+  audio.currentTime = 0;
+}
+    </script>
+     {% endblock %}

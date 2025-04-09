@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ produit.nomProd }}</h1>
+    <p>{{ produit.nbrProd }}</p>
+    <td><img src="{{ produit.getCategorie }}”> height="50"</td>
+
+    {# Display the form to rate the product #}
+    {{ form_start(note_form) }}
+    {{ form_widget(note_form) }}
+    {% if form_errors(note_form) %}
+        <div class="alert alert-danger">{{ form_errors(note_form) }}</div>
+    {% endif %}
+    
+    {{ form_end(note_form) }}
+
+    {% if app.flashes('success') %}
+        <div class="alert alert-success">
+            {% for message in app.flashes('success') %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

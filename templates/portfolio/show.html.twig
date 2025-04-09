@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio{% endblock %}
+{% block head %}
+   <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=643fd801f4f058001944f60f&product=inline-share-buttons&source=platform" async="async"></script>
+
+{% endblock %}
+{% block body %}
+<style>
+    /* Color scheme */
+    :root {
+        --primary-color: #007bff;
+        --secondary-color: #28a745;
+    }
+
+    /* Typography */
+    h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 2rem;
+    }
+
+    /* Image layout */
+    .portfolio-image {
+        border-radius: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        margin-bottom: 2rem;
+    }
+
+    /* Background */
+    body {
+        background-color: #f8f9fa;
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #fff;
+        background-color: var(--primary-color);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #0062cc;
+    }
+
+    .like-btn {
+        background-color: var(--secondary-color);
+    }
+ 
+</style>
+    <h1>Portfolio</h1>
+
+  <table class="table">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ portfolio.id }}</td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <td>                <img src="{{ asset('uploads/portfolio/images/' ~ portfolio.image) }}" alt="{{ portfolio.titre }}" style="max-width: 10%; border-radius: 20px;" data-lightbox="portfolio">
+            <link rel="stylesheet" href="{{ asset('path/to/font-awesome/css/all.min.css') }}">
+
+<a href="{{ asset('uploads/portfolio/images/' ~ portfolio.image) }}" download="{{ portfolio.image }}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-download"></i> Download Image</a>
+
+
+</td>
+        </tr>
+        <tr>
+            <th>Titre</th>
+            <td>{{ portfolio.titre }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ portfolio.description }}</td>
+        </tr>
+        <tr>
+            <th>Likes</th>
+            <td>{{ portfolio.likes }}</td>
+        </tr>
+       <tr>
+    <th>Instagram</th>
+    <td>
+        {% if portfolio.instagram %}
+            <a href="{{ portfolio.instagram }}" target="_blank">{{ portfolio.instagram }}</a>
+        {% endif %}
+    </td>
+</tr>
+        <tr>
+            <th>Reactions</th>
+            <td>
+              
+<a href="{{ path('app_reaction_new', {'id_portfolio': portfolio.id}) }}" class="btn btn-primary">Add Reaction</a>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+    <a class="btn btn-primary" id="get-image-button">
+       <i class="fa-regular fa-images"></i> Get Random Image
+              </a>
+              <div id="image-container"></div>
+              <style>
+                #image-container img {
+                  max-width: 500px;
+                  max-height: 500px;
+                }
+              </style>
+
+              <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+              <script>
+                const getImageButton = document.querySelector('#get-image-button');
+                const imageContainer = document.querySelector('#image-container');
+
+                getImageButton.addEventListener('click', () => {
+                  axios.get('https://api.unsplash.com/photos/random/?client_id=3r_wyxmR4aqS5_0Ch6LgO00C2pOYMnferraXCRkG-Fk')
+                    .then(function(response) {
+                      console.log(response.data.urls.regular);
+                      // use the response data to display the image
+                      const imageUrl = response.data.urls.regular;
+                      const imageElement = document.createElement('img');
+                      imageElement.setAttribute('src', imageUrl);
+                      imageContainer.appendChild(imageElement);
+                    })
+                    .catch(function(error) {
+                      console.log(error);
+                    });
+                });
+              </script>
+               <div id="memory-game"></div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<script>
+    lightbox.option({
+        'resizeDuration': 200,
+        'wrapAround': true
+    })
+</script>
+
+
+
+    <a href="{{ path('app_portfolio_index') }}">back to list</a>
+
+    <a href="{{ path('app_portfolio_edit', {'id': portfolio.id}) }}">edit</a>
+
+    {{ include('portfolio/_delete_form.html.twig') }}
+    <div class="sharethis-inline-share-buttons"></div>
+    
+
+{% endblock %}

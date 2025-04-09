@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Example 1</title>
+    <link rel="stylesheet" href={{asset('style.css')}} media="all" />
+</head>
+<body>
+
+
+<header class="clearfix">
+
+
+
+
+    <br>
+    <div id="company" class="clearfix">
+        <h1 class="align-center"><div>l3o w babahom</div></h1>
+
+        <br>
+
+    </div>
+    <br>
+    <h1 class="align-center"><div>Liste des evenements</div></h1>
+    <br>
+</header>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<main>
+    <table border="2" class="center">
+        <thead>
+        <tr>
+             <th>Id</th>
+                <th>NomOrg</th>
+                <th>Date_debut</th>
+                <th>Date_fin</th>
+                <th>Affiche</th>
+                <th>Adresse</th>
+                <th>NbrPlace</th>
+                <th>type</th>
+           
+            <th>lieu</th>
+          
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for event in events %}
+            <tr>
+                <td>{{ event.id }}</td>
+                <td>{{ event.nomOrg }}</td>
+                <td>{{ event.datedebut ? event.datedebut|date('Y-m-d') : '' }}</td>
+                <td>{{ event.datefin ? event.datefin|date('Y-m-d') : '' }}</td>
+                <td><img src="{{ event.getAffiche }}”> height="50"</td>
+                <td>{{ event.adresse }}</td>
+                <td>{{ event.nbrPlace }}</td>
+                <td>{{ event.type }}</td>
+
+
+            </tr>
+
+
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+
+</main>
+
+</body>
+<style>
+    body{
+        font:normal 12px/20PX "Liberation sans", Arial, Helvetica, sans-serif;
+        color:#585858;
+    }
+    img{
+        width:200px;
+        margin:200px;
+    }
+</style>
+</html>

@@ -1,0 +1,212 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit index{% endblock %}
+
+
+{% block stylesheets %} 
+    {{ parent() }}
+    <style>
+       /* Style pour le titre */
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Style pour le formulaire de recherche */
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Style pour la table des produits */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+.table th {
+  font-weight: bold;
+  background-color: #f5f5f5;
+}
+
+.table td {
+  background-color: #fff;
+}
+
+.table td a {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+/* Style pour le lien Ajouter */
+a[href="{{ path('app_produit_new') }}"] {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+/* Style pour le lien commande */
+a[href="{{ path('app_commande_new') }}"] {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+
+.pagination {
+  margin-top: 20px;
+  list-style: none;
+  text-align: center;
+}
+
+.pagination li {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.pagination li a {
+  display: block;
+  padding: 5px 10px;
+  color: #007bff;
+  background-color: #fff;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.pagination li.active a {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Interface Produit</h1>
+    <form action="{{ path('app_produit_index') }}" method="GET">
+        <input type="text" name="q" placeholder="Recherche...">
+        <button type="submit">Rechercher</button>
+    </form>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom du Produit</th>
+                <th>Nombre du Produit</th>
+                <th>Image</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% set q = app.request.query.get('q') %}
+        {% for produit in produits|filter(p => q is empty or p.nomProd matches '/^.*'~q~'.*$/' or p.categorie matches '/^.*'~q~'.*$/') %}
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.nomProd }}</td>
+                <td>{{ produit.nbrProd }}</td>
+                 <td> <img src="{{ produit.getCategorie }}" alt="{{ produit.nomProd }}" class="card-img-top" style="max-width: 20%; border-radius: 20px;">
+</td>
+
+                <td>
+                              <a href="{{ path('app_produit_show', {'id': produit.id}) }}">Rate</a>
+                               <a href="{{ path('app_produit_qrcode', {'id': produit.id}) }}">Télécharger QR code</a>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+<a href="{{ path('app_commande_new') }}">Commande</a>
+       
+
+{% endblock %}
+{% block footer %}
+    <ul class="pagination">
+        {% for page in 1..totalPages %}
+            <li class="page-item {% if page == currentPage %}active{% endif %}" style="display: inline-block;">
+                <a class="page-link" href="{{ path('app_produit_index', {'currentPage': page}) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+    </ul>    
+{% endblock %}
+
+
+
+{% block javascripts %} 
+    {{ parent() }}
+    <script>
+        // validation côté client à l'aide de jQuery
+        $(document).ready(function() {
+            $('#form').submit(function() {
+                var nomProd = $('#produit_nomProd').val();
+                var nbrProd = $('#produit_nbrProd').val();
+                var categorie = $('#produit_categorie').val();
+
+                if (nomProd.trim() == '') {
+                    alert('Veuillez saisir un nom pour le produit');
+                    return false;
+                }
+
+                if (nbrProd.trim() == '' || isNaN(nbrProd) || nbrProd <= 0) {
+                    alert('Veuillez saisir un nombre positif de produits');
+                    return false;
+                }
+
+                if (categorie.trim() == '') {
+                    alert('Veuillez saisir une image pour le produit');
+                    return false;
+                }
+
+                return true;
+            });
+        });
+    </script>
+{% endblock %}

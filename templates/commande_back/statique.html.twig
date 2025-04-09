@@ -1,0 +1,46 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+    <h1>Statistique des Produits et Commandes</h1>
+
+    <canvas id="myChart"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script>
+        const chartData = {
+            labels: ['commande ', 'produit '],
+            datasets: [
+                {
+                    label: 'Count data',
+                    data: [{{ produitCount }}, {{ commandeCount }}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1,
+                },
+            ],
+        };
+
+        const chartOptions = {
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                    },
+                ],
+            },
+        };
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: chartOptions,
+        });
+    </script>
+{% endblock %}

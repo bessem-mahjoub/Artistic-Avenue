@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publicite index{% endblock %}
+
+{% block body %}
+    <h1>Publicite index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Name</th>
+                <th>....</th>
+                <th>Link</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for publicite in publicites %}
+            <tr>
+               
+                <td>{{ publicite.name }}</td>
+                <td><img src="{{ publicite.getImage }}" alt="{{ publicite.name }}" style="max-width: 40%; border-radius: 20px;"></td>
+                <td>{{ publicite.link }}</td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+
+   
+{% endblock %}
+{% block footer %}
+<style>
+    .pagination li {
+        margin: 15px 40px;
+        display: inline-block;
+    }
+</style>
+{% if totalPages > 1 %}
+    <nav>
+        <ul class="pagination" style="text-align:center;">
+            
+            {% if currentPage > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('app_publicite_indexfront', {'currentPage': currentPage - 1}) }}">
+                        &laquo; Previous
+                    </a>
+                </li>
+            {% endif %}
+            {% if currentPage < totalPages %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('app_publicite_indexfront', {'currentPage': currentPage + 1}) }}">
+                        Next &raquo;
+                    </a>
+                </li>
+                   </ul>
+    </nav>
+            {% endif %}
+     
+{% endif %}
+{% endblock %}
+
+
+
+

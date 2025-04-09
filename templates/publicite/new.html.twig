@@ -1,0 +1,11 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}New Publicite{% endblock %}
+
+{% block body %}
+    <h1>Create new Publicite</h1>
+
+    {{ include('publicite/_form.html.twig') }}
+
+    <a href="{{ path('app_publicite_index') }}">back to list</a>
+{% endblock %}

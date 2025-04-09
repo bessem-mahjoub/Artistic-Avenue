@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %} 
+    {{ parent() }}
+    <style>
+       /* Style pour le titre */
+       h1 {
+         font-size: 24px;
+         font-weight: bold;
+         text-align: center;
+         margin: 20px 0;
+       }
+
+       /* Style pour le formulaire de recherche */
+       form {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         margin-bottom: 20px;
+       }
+
+       input[type="text"] {
+         padding: 10px;
+         border: 1px solid #ccc;
+         border-radius: 4px;
+         margin-right: 10px;
+       }
+
+       button[type="submit"] {
+         padding: 10px 20px;
+         background-color: #007bff;
+         color: #fff;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+       }
+
+       /* Style pour la table des produits */
+       .table {
+         width: 100%;
+         border-collapse: collapse;
+       }
+
+       .table th, .table td {
+         padding: 10px;
+         text-align: left;
+         border: 1px solid #ccc;
+       }
+
+       .table th {
+         font-weight: bold;
+         background-color: #f5f5f5;
+       }
+
+       .table td {
+         background-color: #fff;
+       }
+
+       .table td a {
+         display: inline-block;
+         padding: 5px 10px;
+         background-color: #007bff;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 4px;
+         margin-right: 10px;
+       }
+
+       /* Style pour le lien Ajouter */
+       a[href="{{ path('app_produit_new') }}"] {
+         display: inline-block;
+         padding: 10px 20px;
+         background-color: #007bff;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 4px;
+         margin-top: 20px;
+       }
+
+       /* Style pour le lien commande */
+       a[href="{{ path('app_commande_new') }}"] {
+         display: inline-block;
+         padding: 10px 20px;
+         background-color: #007bff;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 4px;
+         margin-top: 20px;
+       }
+    </style>
+{% endblock %}
+
+{% block title %}Commande index{% endblock %}
+
+{% block body %}
+    <h1>Interface Commande</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NombreP</th>
+                <th>Nom Produit</th>
+                <th>Localisation</th>
+                <th>Date du Commande</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.nombreP }}</td>
+                <td>{{ commande.produit }}</td>
+                <td>{{ commande.localisation }}</td>
+                <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
+                <td>
+                    
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

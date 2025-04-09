@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reaction index{% endblock %}
+
+{% block body %}
+<style>
+.btn {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  cursor: pointer;
+}
+</style>
+    <div class="container">
+        <h1>Reaction index</h1>
+        <div class="row">
+            {% for reaction in reactions %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ reaction.type }}</h4>
+                        
+                        </div>
+                        <div class="card-footer">
+                            <div class="btn-group">
+                                <a href="{{ path('app_reaction_show', {'id': reaction.id}) }}" class="btn btn-secondary">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ path('app_reaction_edit', {'id': reaction.id}) }}" class="btn btn-secondary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <p class="text-center">No records found.</p>
+                </div>
+            {% endfor %}
+        </div>
+        <br>
+        <div class="text-center">
+           <a href="{{ path('app_reaction_new') }}" class="btn btn-success">
+<i class="fa-sharp fa-solid fa-circle-plus"></i>Create new</a>
+        </div>
+    </div>
+{% endblock %}

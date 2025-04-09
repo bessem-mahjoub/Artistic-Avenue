@@ -1,0 +1,230 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<style>
+.btn {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  cursor: pointer;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"] {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  transform: scale(1.1);
+  background-color: #efefef;
+}
+.portfolio-image {
+  width: 50px;
+  height: 50px;
+}
+
+</style>
+<form method="get" action="{{ path('app_portfolio_index') }}">
+  <div class="search-box">
+    <input type="text" id="q" name="q" value="{{ query }}" placeholder="Search...">
+    <button type="submit"><i class="fa fa-search"></i></button>
+  </div>
+</form>
+<div class="filters">
+    <a href="{{ path('app_portfolio_index', {'filter': 'popular'}) }}">Popular</a>
+</div>
+
+{% if filter is defined %}
+    <h2>Filtered by: {{ filter }}</h2>
+{% endif %}
+
+{% for portfolio in portfolios %}
+    {# Render each portfolio as before #}
+{% endfor %}
+  
+
+   <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=643fd801f4f058001944f60f&product=inline-share-buttons&source=platform" async="async"></script>
+    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=6424f797ed8a6d00191c427a&product=sticky-share-buttons&source=platform" async="async"></script>
+   <!-- Include Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZEb6Tp75jXKsUgMkahJlN" crossorigin="anonymous">
+
+<!-- Include Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-5ujl0gox1x5KPJpFZYpRjCTVf4h4H59XbgCzZ1YDZnySjlSAXQOmAp1MkRLSnEoIwuKLtRny7VpzhWzsB8dLLA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+<!-- Include Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZEb6Tp75jXKsUgMkahJlN" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-5ujl0gox1x5KPJpFZYpRjCTVf4h4H59XbgCzZ1YDZnySjlSAXQOmAp1MkRLSnEoIwuKLtRny7VpzhWzsB8dLLA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+     
+
+  <tbody>
+{% for portfolio in portfolios %}
+   <div class="item">
+      <div class="row">
+         <div class="col-lg-6 col-sm-6">
+            <span class="author"></span>
+         </div>
+         <div class="col-lg-6 col-sm-6 text-center">
+          <h2 style="color: black">{{ portfolio.getTitre() }}</h2>
+         <img src="{{ asset('uploads/portfolio/images/' ~ portfolio.image) }}" alt="{{ portfolio.titre }}" style="max-width: 20%; border-radius: 20px;">
+
+           
+          
+  <div class="col-lg-12 text-center">
+   <div class="line-dec"></div>
+   <div class="row">
+      <div class="col-lg-3 col-sm-6">
+         <div class="likes-container">
+            <h4 style="color: white">{{ portfolio.getDescription() }}</h4>
+           <i style="color: white" class="fa-solid fa-thumbs-up"></i> <span style="color: white">: <strong style="color: white" >{{ portfolio.getLikes() }}</strong></span>
+         </div>
+      </div>
+   </div>
+</div>
+ <div class="col-lg-12 text-center">
+            <div class="main-button">
+               <a class="btn btn-primary" onclick="showInstagram({{ portfolio.getId() }}, '{{ portfolio.getInstagram() }}')">
+                  <i class="fab fa-instagram"></i> Instagram
+               </a>
+               <div id="insta-feed-{{ portfolio.getId() }}"></div>
+               <script src="https://www.instagram.com/embed.js"></script>
+               <script>
+                  function showInstagram(id, instagramUrl) {
+                     var instaFeed = document.getElementById("insta-feed-" + id);
+                     if (instaFeed.style.display === "none") {
+                        instaFeed.style.display = "block";
+                        instaFeed.innerHTML =
+                           '<div class="insta-post"><blockquote class="instagram-media" data-instgrm-permalink="' + instagramUrl + '" data-instgrm-version="13"><a href="' + instagramUrl + '"></a></blockquote></div>';
+                        instgrm.Embeds.process();
+                     } else {
+                        instaFeed.style.display = "none";
+                        instaFeed.innerHTML = "";
+                     }
+                  }
+               </script>
+
+
+
+
+         </div>
+               <a href="{{ path('portfolio_like', {'id': portfolio.getId()}) }}" class="btn like-btn">
+                <i class="fa-regular fa-thumbs-up"></i>   Like
+              </a>
+           
+                <a href="{{ path('app_portfolio_edit', {'id': portfolio.id}) }}" class="btn btn-secondary">
+                <i class="fa-regular fa-pen-to-square"></i>Edit</a>
+        <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}" class="btn btn-secondary">Show</a>
+
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+    {% else %}
+    <tr>
+      <td colspan="7">No records found</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+<a href="{{ path('app_portfolio_new') }}" class="btn btn-success">
+<i class="fa-sharp fa-solid fa-circle-plus"></i>Create new</a>
+<div class="sharethis-inline-share-buttons"></div>
+
+
+{% endblock %}
+{% block footer %}
+{% if totalPages > 1 %}
+    <nav>
+        <ul class="pagination" style="text-align:center;">
+            
+            {% if currentPage > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('app_portfolio_index', {'currentPage': currentPage - 1}) }}">
+                        &laquo; Previous
+                    </a>
+                </li>
+            {% endif %}
+            {% if currentPage < totalPages %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('app_portfolio_index', {'currentPage': currentPage + 1}) }}">
+                        Next &raquo;
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+
+<style>
+    .pagination li {
+        margin: 15px 40px;
+        display: inline-block;
+    }
+</style>
+
+
+
+
+{% endblock %}        

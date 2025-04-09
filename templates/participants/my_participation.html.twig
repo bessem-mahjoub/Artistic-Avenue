@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Participation{% endblock %}
+
+{% block body %}
+    <h1>My Participation</h1>
+    <!-- Ajoutez un lien ou un bouton pour générer le QR code -->
+    <!-- Remplacez 'path('generate_qr', {'id': event.id})' par le nom de la route de votre contrôleur qui génère le QR code, et 'event.id' par l'identifiant de l'événement correspondant -->
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <!-- Ajouter d'autres colonnes nécessaires -->
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.nomOrg }}</td>
+                <td>{{ event.adresse }}</td>
+                <td>{{ event.datedebut ? event.datedebut|date('Y-m-d') : '' }}</td>
+                <td>{{ event.datefin ? event.datefin|date('Y-m-d') : '' }}</td>
+
+                <!-- Afficher d'autres attributs d'événement nécessaires -->
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No participation found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

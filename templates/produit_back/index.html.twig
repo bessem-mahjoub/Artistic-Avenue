@@ -1,0 +1,85 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Produit index{% endblock %}
+
+{% block stylesheets %} 
+    {{ parent() }}
+    <style>
+        /* Style pour le lien Ajouter */
+        a[href="{{ path('app_produit_back_new') }}"] {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    <h1>Produit index</h1>
+
+ <div class="col-md-4">
+    <form action="{{ path('app_produit_back_index') }}" method="get">
+        <div class="form-group">
+            <label for="sort">Sort by:</label>
+            <select class="form-control" id="sort" name="sort">
+                <option value="id" {% if sort == 'id' %}selected{% endif %}>Id</option>
+                <option value="nbrProd" {% if sort == 'nbrProd' %}selected{% endif %}>NbrProd</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="direction">Direction:</label>
+            <select class="form-control" id="direction" name="direction">
+                <option value="asc" {% if direction == 'asc' %}selected{% endif %}>Asc</option>
+                <option value="desc" {% if direction == 'desc' %}selected{% endif %}>Desc</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="id">Id:</label>
+            <input type="text" class="form-control" id="id" name="id" value="{{ id }}">
+        </div>
+        <div class="form-group">
+            <label for="nbproduit">Nbproduit:</label>
+            <input type="text" class="form-control" id="nbproduit" name="nbproduit" value="{{ nbproduit }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Sort/Search</button>
+    </form>
+</div>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomProd</th>
+                <th>NbrProd</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for produit in produits %}
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.nomProd }}</td>
+                <td>{{ produit.nbrProd }}</td>
+                <td><img src="{{ produit.getCategorie }}" height="50"></td>
+                <td>
+                    <a href="{{ path('app_produit_back_show', {'id': produit.id}) }}">Afficher</a>
+                    <a href="{{ path('app_produit_back_edit', {'id': produit.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_produit_back_new') }}">Ajouter Produit</a>
+{% endblock %}
